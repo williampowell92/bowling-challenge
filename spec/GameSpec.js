@@ -8,4 +8,8 @@ describe('Game', function () {
   it('is created with an empty frame array', function () {
     expect(game.frames).toEqual([])
   })
+
+  it('scores a gutter game correctly', function () {
+    
+  })
 })

@@ -1,3 +1,3 @@
-function Bowl(count) {
+function Bowl (count) {
   this.count = count
 }

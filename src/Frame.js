@@ -25,3 +25,7 @@ Frame.prototype.isStrike = function () {
 Frame.prototype.addBonusBowl = function (bowl) {
   this.bonusScore += bowl.count
 }
+
+Frame.prototype.score = function () {
+  return this.firstBowl.count + this.secondBowl.count + this.bonusScore
+}

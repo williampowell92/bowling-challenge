@@ -109,7 +109,7 @@ describe('Frame', function () {
           firstBowl = { count: i }
           secondBowl = { count: y }
           frame.addBowl(firstBowl)
-          frame.agddBowl(secondBowl)
+          frame.addBowl(secondBowl)
           expect(frame.isStrike()).toBeFalsy()
         }
       }
@@ -146,6 +146,40 @@ describe('Frame', function () {
       var bonusBowl = { count: 5 }
       frame.addBonusBowl(bonusBowl)
       expect(frame.bonusScore).toEqual(5)
+    })
+  })
+
+  describe('score', function () {
+    function addBowls (firstScore, secondScore) {
+      firstBowl = { count: firstScore }
+      secondBowl = { count: secondScore }
+      frame.addBowl(firstBowl)
+      frame.addBowl(secondBowl)
+    }
+
+    function addBonuses (firstBonus, secondBonus) {
+      if (secondBonus) {
+        firstBonus = { count: firstBonus }
+      }
+    }
+
+    it('scores open frame correctly', function () {
+      addBowls(5, 3)
+      expect(frame.score()).toEqual(8)
+    })
+
+    it('scores a spare frame correctly', function () {
+      addBowls(5, 5)
+      var bonusBowl = { count: 5 }
+      frame.addBonusBowl(bonusBowl)
+      expect(frame.score()).toEqual(15)
+    })
+
+    it('scores a strike frame correctly', function () {
+      addBowls(10, 0)
+      frame.addBonusBowl({ count: 5 })
+      frame.addBonusBowl({ count: 4 })
+      expect(frame.score()).toEqual(19)
     })
   })
 })
