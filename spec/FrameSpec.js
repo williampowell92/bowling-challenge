@@ -109,7 +109,7 @@ describe('Frame', function () {
           firstBowl = { count: i }
           secondBowl = { count: y }
           frame.addBowl(firstBowl)
-          frame.addBowl(secondBowl)
+          frame.agddBowl(secondBowl)
           expect(frame.isStrike()).toBeFalsy()
         }
       }
