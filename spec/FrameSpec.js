@@ -1,6 +1,5 @@
 describe('Frame', function () {
   var frame
-  var bowl
 
   var firstBowl = {
     count: function () {}
@@ -155,12 +154,6 @@ describe('Frame', function () {
       secondBowl = { count: secondScore }
       frame.addBowl(firstBowl)
       frame.addBowl(secondBowl)
-    }
-
-    function addBonuses (firstBonus, secondBonus) {
-      if (secondBonus) {
-        firstBonus = { count: firstBonus }
-      }
     }
 
     it('scores open frame correctly', function () {
