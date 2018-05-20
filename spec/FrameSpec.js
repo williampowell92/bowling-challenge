@@ -9,6 +9,13 @@ describe('Frame', function () {
     count: function () {}
   }
 
+  function addBowls (firstScore, secondScore) {
+    firstBowl = { count: firstScore }
+    secondBowl = { count: secondScore }
+    frame.addBowl(firstBowl)
+    frame.addBowl(secondBowl)
+  }
+
   beforeEach(function () {
     frame = new Frame()
   })
@@ -149,13 +156,6 @@ describe('Frame', function () {
   })
 
   describe('score', function () {
-    function addBowls (firstScore, secondScore) {
-      firstBowl = { count: firstScore }
-      secondBowl = { count: secondScore }
-      frame.addBowl(firstBowl)
-      frame.addBowl(secondBowl)
-    }
-
     it('scores open frame correctly', function () {
       addBowls(5, 3)
       expect(frame.score()).toEqual(8)
@@ -173,6 +173,23 @@ describe('Frame', function () {
       frame.addBonusBowl({ count: 5 })
       frame.addBonusBowl({ count: 4 })
       expect(frame.score()).toEqual(19)
+    })
+  })
+
+  describe('addRemainingBonuses', function () {
+    it('does not add bonus roll count for open frame', function () {
+      addBowls(4, 4)
+      expect(frame.remainingBonuses).toEqual(0)
+    })
+
+    it('adds one bonus roll count for a spare frame', function () {
+      addBowls(4, 6)
+      expect(frame.remainingBonuses).toEqual(1)
+    })
+
+    it('adds two bonus roll counts for a strike frame', function () {
+      addBowls(10, 0)
+      expect(frame.remainingBonuses).toEqual(2)
     })
   })
 })

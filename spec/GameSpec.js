@@ -50,5 +50,20 @@ describe('Game', function () {
       game.calculateCurrentScore()
       expect(game.score).toEqual(80)
     })
+
+    it('scores a game with a spare correctly', function () {
+      var frame = new Frame()
+      frame.addBowl({ count: 5 })
+      frame.addBowl({ count: 5 })
+      game.addFrame(frame)
+      for (i = 0; i < 9; i++) {
+        var frame = new Frame()
+        frame.addBowl({ count: 4 })
+        frame.addBowl({ count: 4 })
+        game.addFrame(frame)
+      }
+      game.calculateCurrentScore()
+      expect(game.score).toEqual(86)
+    })
   })
 })

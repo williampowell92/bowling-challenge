@@ -5,6 +5,7 @@ function Frame () {
 Frame.prototype.addBowl = function (bowl) {
   if (this.firstBowl) {
     this.secondBowl = bowl
+    this.addRemainingBonusRolls()
   } else {
     this.firstBowl = bowl
   }
@@ -28,4 +29,14 @@ Frame.prototype.addBonusBowl = function (bowl) {
 
 Frame.prototype.score = function () {
   return this.firstBowl.count + this.secondBowl.count + this.bonusScore
+}
+
+Frame.prototype.addRemainingBonusRolls = function () {
+  if (this.isOpen()) {
+    this.remainingBonuses = 0
+  } else if (this.isSpare()) {
+    this.remainingBonuses = 1
+  } else if (this.isStrike()) {
+    this.remainingBonuses = 2
+  }
 }
