@@ -1,10 +1,12 @@
 describe('Game', function () {
   var game
   var frame
+  var bowl
 
   beforeEach(function () {
     game = new Game()
     frame = new Frame()
+    bowl = new Bowl()
   })
 
   it('is created with an empty frame array', function () {
@@ -64,6 +66,41 @@ describe('Game', function () {
       }
       game.calculateCurrentScore()
       expect(game.score).toEqual(86)
+    })
+  })
+
+  describe('bowl', function () {
+    it('creates a frame if none exists', function () {
+      game.bowl(5)
+      expect(game._currentFrame()).toBeTruthy()
+    })
+
+    describe('open frame', function () {
+      it('adds a bowl to the current frame', function () {
+        game.bowl(5)
+        expect(game._currentFrame().firstBowl.count).toEqual(5)
+      })
+
+      it('adds a second bowl to the current frame', function () {
+        game.bowl(5)
+        game.bowl(4)
+        expect(game._currentFrame().secondBowl.count).toEqual(4)
+      })
+
+      it('creates another frame after the second bowl', function () {
+        game.bowl(5)
+        game.bowl(4)
+        game.bowl(3)
+        expect(game._currentFrame().firstBowl.count).toEqual(3)
+      })
+    })
+
+    describe('strike frame', function () {
+      it('creates another frame after a strike', function () {
+        game.bowl(10)
+        game.bowl(5)
+        expect(game._currentFrame().firstBowl.count).toEqual(5)
+      })
     })
   })
 })
