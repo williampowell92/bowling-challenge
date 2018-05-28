@@ -153,6 +153,12 @@ describe('Frame', function () {
       frame.addBonusBowl(bonusBowl)
       expect(frame.bonusScore).toEqual(5)
     })
+
+    it('reduces remaining bonuses by one', function () {
+      frame.remainingBonuses = 2
+      frame.addBonusBowl({ count: 5 })
+      expect(frame.remainingBonuses).toEqual(1)
+    })
   })
 
   describe('score', function () {
@@ -176,7 +182,7 @@ describe('Frame', function () {
     })
   })
 
-  describe('addRemainingBonuses', function () {
+  describe('addRemainingBonusRolls', function () {
     it('does not add bonus roll count for open frame', function () {
       addBowls(4, 4)
       expect(frame.remainingBonuses).toEqual(0)
@@ -190,6 +196,18 @@ describe('Frame', function () {
     it('adds two bonus roll counts for a strike frame', function () {
       addBowls(10, 0)
       expect(frame.remainingBonuses).toEqual(2)
+    })
+  })
+
+  describe('isComplete', function () {
+    it('is true if there are no remaining bonuses', function () {
+      frame.remainingBonuses = 0
+      expect(frame.isComplete()).toBeTruthy()
+    })
+
+    it('is false is there are remaining bonuses', function () {
+      frame.remainingBonuses = 1
+      expect(frame.isComplete()).toBeFalsy()
     })
   })
 })

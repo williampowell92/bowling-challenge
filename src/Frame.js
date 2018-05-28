@@ -5,7 +5,7 @@ function Frame () {
 Frame.prototype.addBowl = function (bowl) {
   if (this.firstBowl) {
     this.secondBowl = bowl
-    this.addRemainingBonusRolls()
+    this._addRemainingBonusRolls()
   } else {
     this.firstBowl = bowl
   }
@@ -25,13 +25,18 @@ Frame.prototype.isStrike = function () {
 
 Frame.prototype.addBonusBowl = function (bowl) {
   this.bonusScore += bowl.count
+  this.reduceRemainingBonusRolls()
+}
+
+Frame.prototype.reduceRemainingBonusRolls = function () {
+  this.remainingBonuses--
 }
 
 Frame.prototype.score = function () {
   return this.firstBowl.count + this.secondBowl.count + this.bonusScore
 }
 
-Frame.prototype.addRemainingBonusRolls = function () {
+Frame.prototype._addRemainingBonusRolls = function () {
   if (this.isOpen()) {
     this.remainingBonuses = 0
   } else if (this.isSpare()) {
@@ -39,4 +44,8 @@ Frame.prototype.addRemainingBonusRolls = function () {
   } else if (this.isStrike()) {
     this.remainingBonuses = 2
   }
+}
+
+Frame.prototype.isComplete = function () {
+  return this.remainingBonuses === 0
 }
