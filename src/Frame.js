@@ -10,6 +10,7 @@ Frame.prototype.addBowl = function (bowl) {
     this.firstBowl = bowl
     if (this.isStrike()) {
       this._addRemainingBonusRolls()
+      this.secondBowl = new Bowl(0)
     }
   }
 }
@@ -50,13 +51,5 @@ Frame.prototype._addRemainingBonusRolls = function () {
 }
 
 Frame.prototype.isComplete = function () {
-  if (this.secondBowl) {
-    return true
-  } else if (this.firstBowl) {
-    if (this.firstBowl.count === 10) {
-      return true
-    } else {
-      return false
-    }
-  }
+  return this.secondBowl || (this.firstBowl && this.firstBowl.count === 10)
 }

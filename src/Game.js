@@ -13,14 +13,23 @@ Game.prototype.calculateCurrentScore = function () {
   }, this)
 }
 
-Game.prototype.bowl = function (count) {
+Game.prototype.bowl = function (count, bowl = new Bowl(count)) {
   if (this._currentFrame() === undefined || this._currentFrame().isComplete()) {
     this.addFrame(new Frame())
   }
 
-  this._currentFrame().addBowl(new Bowl(count))
+  this._assignBonuses(bowl)
+  this._currentFrame().addBowl(bowl)
 }
 
 Game.prototype._currentFrame = function () {
   return this.frames.slice(-1)[0]
+}
+
+Game.prototype._assignBonuses = function (bowl) {
+  this.frames.forEach(function (frame) {
+    if (frame.remainingBonuses > 0) {
+      frame.addBonusBowl(bowl)
+    }
+  }, this)
 }

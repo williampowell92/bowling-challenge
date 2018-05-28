@@ -32,40 +32,60 @@ describe('Game', function () {
 
   describe('calculateCurrentScore', function () {
     it('scores a gutter game correctly', function () {
-      for (i = 0; i < 10; i++) {
-        var frame = new Frame()
-        frame.addBowl({ count: 0 })
-        frame.addBowl({ count: 0 })
-        game.addFrame(frame)
+      for (i = 0; i < 20; i++) {
+        game.bowl(0)
       }
       game.calculateCurrentScore()
       expect(game.score).toEqual(0)
     })
 
     it('scores an open game correctly', function () {
-      for (i = 0; i < 10; i++) {
-        var frame = new Frame()
-        frame.addBowl({ count: 4 })
-        frame.addBowl({ count: 4 })
-        game.addFrame(frame)
+      for (i = 0; i < 20; i++) {
+        game.bowl(4)
       }
       game.calculateCurrentScore()
       expect(game.score).toEqual(80)
     })
 
-    xit('scores a game with a spare correctly', function () {
-      var frame = new Frame()
-      frame.addBowl({ count: 5 })
-      frame.addBowl({ count: 5 })
-      game.addFrame(frame)
-      for (i = 0; i < 9; i++) {
-        frame = new Frame()
-        frame.addBowl({ count: 4 })
-        frame.addBowl({ count: 4 })
-        game.addFrame(frame)
+    it('scores a game with a spare correctly', function () {
+      game.bowl(5)
+      game.bowl(5)
+      for (i = 0; i < 18; i++) {
+        game.bowl(4)
       }
       game.calculateCurrentScore()
       expect(game.score).toEqual(86)
+    })
+
+    it('scores a game with a strike correctly', function () {
+      game.bowl(10)
+      for (i = 0; i < 18; i++) {
+        game.bowl(4)
+      }
+      game.calculateCurrentScore()
+      expect(game.score).toEqual(90)
+    })
+
+    it('scores game with multiple strikes and spares correctly', function () {
+      for (i = 0; i < 3; i++) {
+        game.bowl(10)
+      }
+      for (i = 0; i < 6; i++) {
+        game.bowl(5)
+      }
+      for (i = 0; i < 8; i++) {
+        game.bowl(4)
+      }
+      game.calculateCurrentScore()
+      expect(game.score).toEqual(151)
+    })
+
+    it('scores a perfect game correctly', function () {
+      for (i = 0; i < 12; i++) {
+        game.bowl(10)
+      }
+      game.calculateCurrentScore()
+      expect(game.score).toEqual(300)
     })
   })
 
