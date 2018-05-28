@@ -200,14 +200,23 @@ describe('Frame', function () {
   })
 
   describe('isComplete', function () {
-    it('is true if there are no remaining bonuses', function () {
-      frame.remainingBonuses = 0
+    it('is false if no bowls are rolled', function () {
+      expect(frame.isComplete()).toBeFalsy()
+    })
+
+    it('is false if one non-strike is rolled', function () {
+      frame.addBowl({ count: 5 })
+      expect(frame.isComplete()).toBeFalsy()
+    })
+
+    it('is true if two bowls are rolled', function () {
+      addBowls(5, 5)
       expect(frame.isComplete()).toBeTruthy()
     })
 
-    it('is false is there are remaining bonuses', function () {
-      frame.remainingBonuses = 1
-      expect(frame.isComplete()).toBeFalsy()
+    it('is true if a strike is rolled', function () {
+      frame.addBowl({ count: 10 })
+      expect(frame.isComplete()).toBeTruthy()
     })
   })
 })

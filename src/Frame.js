@@ -47,5 +47,13 @@ Frame.prototype._addRemainingBonusRolls = function () {
 }
 
 Frame.prototype.isComplete = function () {
-  return this.remainingBonuses === 0
+  if (this.secondBowl) {
+    return true
+  } else if (this.firstBowl) {
+    if (this.firstBowl.count === 10) {
+      return true
+    } else {
+      return false
+    }
+  }
 }
