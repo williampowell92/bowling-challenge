@@ -8,9 +8,11 @@ Game.prototype.addFrame = function (frame) {
 }
 
 Game.prototype.calculateCurrentScore = function () {
-  this.frames.forEach(function (frame) {
-    this.score += frame.score()
-  }, this)
+  for (var i = 0; i < 10; i++) {
+    if (this.frames[i]) {
+      this.score += this.frames[i].score()
+    }
+  }
 }
 
 Game.prototype.bowl = function (count, bowl = new Bowl(count)) {

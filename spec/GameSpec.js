@@ -87,6 +87,14 @@ describe('Game', function () {
       game.calculateCurrentScore()
       expect(game.score).toEqual(300)
     })
+
+    it('scores a game of spares correctly', function () {
+      for (var i = 0; i < 21; i++) {
+        game.bowl(5)
+      }
+      game.calculateCurrentScore()
+      expect(game.score).toEqual(150)
+    })
   })
 
   describe('bowl', function () {
